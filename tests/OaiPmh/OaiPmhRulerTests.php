@@ -2,7 +2,7 @@
 
 namespace Naoned\OaiPmhServerBundle\Tests\OaiPmh;
 
-use Naoned\OaiPmhServerBundle\OaiPmh\OaiPmhRuler;
+use Naoned\OaiPmhServerBundle\Manager\OaiPmhRuler;
 
 class OaiPmhRulerTests extends \PHPUnit_Framework_TestCase
 {

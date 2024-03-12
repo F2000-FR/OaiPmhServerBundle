@@ -8,7 +8,7 @@ This is an Oai-Pmh server only, you have to plug your own data provider.
 ## Features
 
 * Compliant with official Oai-Pmh tech spec : http://www.openarchives.org/OAI/openarchivesprotocol.html
-* Sucessfully pass http://re.cs.uct.ac.za/ test
+* Successfully pass http://re.cs.uct.ac.za/ test
 * Automated resumption in large list, with arrays or ArrayObject
 * On the fly XML generation, if you provide Records in a real-time data-accesing ArrayObject
 * Parametrable resumption items-per-page (default at 50)
@@ -44,17 +44,16 @@ Add the NaonedOaiPmhServerBundle to your application's kernel:
 Add to your config.yml
 ```yml
 naoned_oai_pmh_server:
-    data_provider_service_name: naoned.oaipmh.data_provider
-    count_per_load: 50
+  count_per_load: 50
 ```
 You can choose here nb of records and sets in list with resumption
+
 
 Add to your routing.yml
 ```yml
 naoned_oai_pmh_server:
     resource: "@NaonedOaiPmhServerBundle/Resources/config/routing.yml"
     prefix:   /oaipmh
-
 ```
 You can choose here route to your Oai-Pmh server
 
@@ -63,9 +62,7 @@ Add to your services.yml
 In your own Bundle (that manage data), add a service to expose data
 ```yml
     naoned.oaipmh.data_provider:
-        class: [YOUR_VENDOR]\[YOUR_BUNDLE]\[YOUR_PATH]\[YOUR_CLASS]
-        calls:
-            - [ setContainer, ["@service_container"] ]
+      class: [YOUR_VENDOR]\[YOUR_BUNDLE]\[YOUR_PATH]\[YOUR_CLASS]
 ```
 
 ## Create Data provider
@@ -111,7 +108,7 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
      * @param  string $identifier [description]
      * @return array
      */
-    public function getRecord($identifier)
+    public function getRecord(string $identifier)
     {
         return array(
             'title'       => 'Dummy content',
@@ -140,12 +137,12 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
 
     /**
      * Search for records
-     * @param  String|null    $setTitle Title of wanted set
+     * @param  String|null    $title Title of wanted set
      * @param  \DateTime|null $from     Date of last change «from»
      * @param  \DataTime|null $until    Date of last change «until»
      * @return array|ArrayObject        List of items
      */
-    public function getRecords($setTitle = null, \DateTime $from = null, \DataTime $until = null)
+    public function getRecords(string $title = null, \DateTime $from = null, \DataTime $until = null)
     {
         return array(
             array(
@@ -153,6 +150,7 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
                 'title'       => 'Dummy content 1',
                 'description' => 'Some more dummy content',
                 'last_change' => '2015-10-12',
+                'thumb' => 'https://...',
                 'sets'        => array('seta', 'setb'),
             ),
             array(
@@ -160,6 +158,7 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
                 'title'       => 'Dummy content 2',
                 'description' => 'Some more dummy content',
                 'last_change' => '2015-10-12',
+                'thumb' => 'https://...',
                 'sets'        => array('seta'),
             ),
             array(
@@ -167,6 +166,7 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
                 'title'       => 'Dummy content 3',
                 'description' => 'Some more dummy content',
                 'last_change' => '2015-10-12',
+                'thumb' => 'https://...',
                 'sets'        => array('seta'),
             ),
             array(
@@ -174,6 +174,7 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
                 'title'       => 'Dummy content 4',
                 'description' => 'Some more dummy content',
                 'last_change' => '2015-10-12',
+                'thumb' => 'https://...',
                 'sets'        => array('setc'),
             ),
             array(
@@ -181,6 +182,7 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
                 'title'       => 'Dummy content 5',
                 'description' => 'Some more dummy content',
                 'last_change' => '2015-10-12',
+                'thumb' => 'https://...',
                 'sets'        => array('setd'),
             ),
         );
@@ -188,20 +190,20 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
 
     /**
      * Tell me, this «record», in which «set» is it ?
-     * @param  any   $record An item of elements furnished by getRecords method
+     * @param  array   $record An item of elements furnished by getRecords method
      * @return array         List of sets, the record belong to
      */
-    public function getSetsForRecord($record)
+    public function getSetsForRecord(array $record)
     {
         return $record['sets'];
     }
 
     /**
      * Transform the provided record in an array with Dublin Core, «dc_title»  style
-     * @param  any   $record An item of elements furnished by getRecords method
+     * @param  array   $record An item of elements furnished by getRecords method
      * @return array         Dublin core data
      */
-    public static function dublinizeRecord($record)
+    public static function dublinizeRecord(array $record)
     {
         return array(
             'dc_identifier'  => $record['identifier'],
@@ -221,20 +223,20 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
 
     /**
      * Get identifier of id
-     * @param  any   $record An item of elements furnished by getRecords method
+     * @param  array   $record An item of elements furnished by getRecords method
      * @return string        Record Id
      */
-    public static function getRecordId($record)
+    public static function getRecordId(array $record)
     {
         return $record['identifier'];
     }
 
     /**
      * Get last change date
-     * @param  any   $record An item of elements furnished by getRecords method
+     * @param  array   $record An item of elements furnished by getRecords method
      * @return \DateTime|string     Record last change
      */
-    public static function getRecordUpdated($record)
+    public static function getRecordUpdated(array $record)
     {
         return $record['last_change'];
     }
@@ -259,5 +261,3 @@ class [YOUR_CLASS] implements DataProviderInterface
 ```
 
 Of course, you have to implement data retreiveing here, based on anything : db (Sql), mappers (Doctrine, Pomm) or any other data storing (ElasticSearch …). That why I made this class container aware, but you can preferely set required services via setters.
-
-In addition, lists (records ans sets) can be sent as ArrayObjects, in order to manage data calling in an other class that implements ```\ArrayObject```.

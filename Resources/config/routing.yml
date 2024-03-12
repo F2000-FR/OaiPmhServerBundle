@@ -1,6 +1,0 @@
-naoned_oaipmh:
-    path: ''
-    defaults:
-        _controller: NaonedOaiPmhServerBundle:Main:Index
-        _format: xml
-
