@@ -76,9 +76,8 @@ In order to do it, create on your side a class based on this example :
 namespace [YOUR_VENDOR]\[YOUR_BUNDLE]\[YOUR_PATH];
 
 use Naoned\OaiPmhServerBundle\DataProvider\DataProviderInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
-class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
+class [YOUR_CLASS] implements DataProviderInterface
 {
     /**
      * @return string Repository name
@@ -240,23 +239,6 @@ class [YOUR_CLASS] extends ContainerAware implements DataProviderInterface
     {
         return $record['last_change'];
     }
-}
-
-```
-
-If you use Symfony >= 2.8, use ContainerAwareTrait instead of extending ContainerAware :
-
-```php
-namespace [YOUR_VENDOR]\[YOUR_BUNDLE]\[YOUR_PATH];
-
-use Naoned\OaiPmhServerBundle\DataProvider\DataProviderInterface
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-
-class [YOUR_CLASS] implements DataProviderInterface
-{
-    use ContainerAwareTrait;
-
-    ...
 }
 ```
 

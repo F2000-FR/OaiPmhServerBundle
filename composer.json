@@ -1,5 +1,6 @@
 {
     "name": "naoned/oai-pmh-server",
+    "version": "dev-main",
     "description": "Bundle for Symfony2 that provides an Oai-Pmh server for your data",
     "keywords": ["oai-pmh", "oaipmh"],
     "license": "MIT",
@@ -12,10 +13,15 @@
             "Naoned\\OaiPmhServerBundle\\": "src/"
         }
     },
-    "target-dir" : "Naoned/OaiPmhServerBundle",
     "require": {
-        "php": ">=8.1",
-        "symfony/symfony": "~5.0",
-        "doctrine/common": "~2"
+        "php": "^8.0",
+        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
+        "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
+        "symfony/http-kernel": "^5.4 || ^6.0 || ^7.0",
+        "symfony/routing": "^5.4 || ^6.0 || ^7.0",
+        "symfony/config": "^5.4 || ^6.0 || ^7.0",
+        "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
+        "symfony/cache": "^5.4 || ^6.0 || ^7.0",
+        "symfony/yaml": "^5.4 || ^6.0 || ^7.0"
     }
 }
