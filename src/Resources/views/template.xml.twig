@@ -6,8 +6,8 @@
 >
   <responseDate>{{ "now"|date('Y-m-d\\TH:i:s\\Z') }}</responseDate>
   <request
-    {% if (queryParams.verb is defined and queryParams.verb) %}verb="{{ queryParams.verb }}"{% endif %}
     {% block requestParams %}
+        {% if (queryParams.verb is defined and queryParams.verb) %}verb="{{ queryParams.verb }}"{% endif %}
         {% if (queryParams.metadataPrefix is defined and queryParams.metadataPrefix) %}metadataPrefix="{{ queryParams.metadataPrefix }}"{% endif %}
         {% if (queryParams.set is defined and queryParams.set) %}set="{{ queryParams.set }}"{% endif %}
         {% if (queryParams.from is defined and queryParams.from) %}from="{{ queryParams.from }}"{% endif %}

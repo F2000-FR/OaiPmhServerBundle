@@ -78,8 +78,11 @@ class OaiPmhRuler
             $oCacheItem = $this->cacheSystem->getItem($this->getCacheKey($aQueryParams['resumptionToken']));
 
             $aSearchParams = $oCacheItem->get();
-            if (!$aSearchParams || ($aSearchParams['verb'] !== $aQueryParams['verb'])) {
-                throw new badResumptionTokenException();
+            if (!$aSearchParams
+                || !isset($aSearchParams['verb'], $aQueryParams['verb'])
+                || ($aSearchParams['verb'] !== $aQueryParams['verb'])
+            ) {
+                throw new BadResumptionTokenException();
             }
         } else {
             $aSearchParams = $aQueryParams;
@@ -184,6 +187,10 @@ class OaiPmhRuler
         }
 
         $this->checkNoOtherArguments($aQueryParams, $aArguments);
+
+        if (array_key_exists('verb', $aArguments)) {
+            $aQueryParams['verb'] = $aArguments['verb'];
+        }
 
         return $aQueryParams;
     }

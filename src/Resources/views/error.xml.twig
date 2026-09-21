@@ -1,7 +1,11 @@
-{% extends 'NaonedOaiPmhServerBundle::template.xml.twig' %}
+{% extends '@NaonedOaiPmhServer/template.xml.twig' %}
 
-{% block requestParams %}{% endblock %}
+{% block requestParams %}
+    {% if code not in ['badVerb', 'badArgument'] %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-  <error code="{{ code }}">{{ message }}</error>
+    <error code="{{ code }}">{{ message }}</error>
 {% endblock %}
